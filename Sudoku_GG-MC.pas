@@ -195,11 +195,15 @@ begin
       PistasSudokuR[i, j] := True;
       Inc(PistasGeneradas);
     end;
+    if not ResolverSudokuGenerado(SudokuR) then
+      begin
+        goto NumeroRandom;
+      end;
   until PistasGeneradas >= PistasDificil;
   if not ResolverSudokuGenerado(SudokuR) then
-    begin
-      goto NumeroRandom;
-    end;
+      begin
+        goto NumeroRandom;
+      end;
 end;
 procedure JugarSudoku;
 var
