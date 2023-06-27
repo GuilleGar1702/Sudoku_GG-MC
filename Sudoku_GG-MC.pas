@@ -313,7 +313,7 @@ begin
 		//--Inicio del area de Manual del Usuario--//
 		clrscr;
 					writeln('|=================================================================|');
-					writeln('|                      Bienvenido a TUSUDOKU                      |');
+					writeln('|                Bienvenido a ''TUSUDOKU'' ',Nickname,'        |');
 					writeln('|                   A continuacion, recibira las                  |');
 					writeln('| Instrucciones para poder utilizar el programa de forma correcta |');
 					writeln('|=================================================================|');
@@ -417,7 +417,9 @@ begin
       
       else
       begin
-		writeln('La opcion ingresada no es valida');
+		writeln('|======================================|');
+		writeln('|   La opcion ingresada no es valida   |');
+		writeln('|======================================|');
 		end;
   end;
   until opcion1=3;
