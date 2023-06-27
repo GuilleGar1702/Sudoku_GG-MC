@@ -454,14 +454,18 @@ begin
     if not PistasSudoku[fila, columna] then
     begin
       repeat
-        write('Ingrese el número (1-9): ');
+        write('Ingrese el numero (1-9): ');
         readln(numero);
       until (numero >= 1) and (numero <= Columnas);
       if EsMovimientoValido(Sudoku, fila, columna, numero) then
         RealizarMovimiento(Sudoku, fila, columna, numero)
       else
         begin
-          writeln('Movimiento inválido. Intente nuevamente.');
+          MostrarTablero(Sudoku, PistasSudoku);
+          textcolor(LightRed);
+          writeln('Movimiento invalido. Intente nuevamente.');
+          textcolor(lightcyan);
+          goto EtiquetaAccion;
         end;
     end
     else
