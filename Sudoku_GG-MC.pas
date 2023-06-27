@@ -22,6 +22,7 @@ var
   PistasSudokuR: PistasR;
   SudokuFinal: TableroFinal;
   PistasSudokuFinal: PistasFinal;
+  NickName: string;
 procedure InicializarTablero(var Sudoku: Tablero);
 var
   i, j: Integer;
@@ -57,11 +58,13 @@ end;
 
 //----------------------------------------------------------------------------------------//
 
-procedure MostrarTablero(Sudoku: Tablero; PistasSudoku: Pistas);
+procedure MostrarTablero(Sudoku: Tablero; PistasSudoku: Pistas; NickName: string);
 var
   i, j: Integer;
 begin
   ClrScr;
+  writeln('Hola, ', NickName, '. Este es tu sudoku asignado:');
+  writeln;
   for i := 1 to Filas do
   begin
     for j := 1 to Columnas do
@@ -107,7 +110,7 @@ begin
 end;
 
 //--Si el programa fuese un atomo, este procedimiento sería un neutrón, puro agregando peso, nada de carga util, porque puedes cambiar el dato y ya, pero la comodidad mató al humano--//
-procedure EliminarMovimiento(var Sudoku: Tablero; fila, columna: Integer);
+procedure EliminarMovimiento(var Sudoku: Tablero; fila, columna: Integer; NickName: string);
 var numero: shortint;
 begin
   {textcolor(white);
@@ -115,7 +118,7 @@ begin
   numero:=0;}
   numero:=0;
   RealizarMovimiento(Sudoku, fila, columna, numero);
-  MostrarTablero(Sudoku, PistasSudoku);
+  MostrarTablero(Sudoku, PistasSudoku, NickName);
 end;
 //--Volvemos con las cargas de verdad... (poronga de procedimiento)--//
 function TableroCompleto(Sudoku: Tablero): Boolean;
@@ -281,6 +284,13 @@ begin
   Randomize;
   EtiquetaInicio:
   textcolor(lightcyan);
+  writeln('=====================================');
+  writeln('|   Bienvenido al "TuSudoku C&G"    |');
+  writeln('=====================================');
+  Writeln('|        Ingrese su NickName        |');
+  writeln('=====================================');
+  write('NickName:');
+  readln(NickName);
   repeat
   clrscr;
   writeln('===============================================================================');
@@ -413,7 +423,7 @@ begin
   InicializarTablero(Sudoku);
   InicializarPistas(PistasSudoku);
   repeat
-    MostrarTablero(Sudoku, PistasSudoku);
+    MostrarTablero(Sudoku, PistasSudoku, NickName);
     repeat
       EtiquetaAccion:
       textcolor(lightcyan);
@@ -432,7 +442,7 @@ begin
             readln(fila);
             write('Ingrese la columna (1-9): ');
             readln(columna);
-            EliminarMovimiento(Sudoku, fila, columna);
+            EliminarMovimiento(Sudoku, fila, columna, NickName);
           end;
         3:begin
             goto EtiquetaRendirse;
@@ -461,7 +471,7 @@ begin
         RealizarMovimiento(Sudoku, fila, columna, numero)
       else
         begin
-          MostrarTablero(Sudoku, PistasSudoku);
+          MostrarTablero(Sudoku, PistasSudoku, NickName);
           textcolor(LightRed);
           writeln('Movimiento invalido. Intente nuevamente.');
           textcolor(lightcyan);
@@ -473,10 +483,10 @@ begin
         writeln('No puede modificar una pista. Intente nuevamente.');
       end;
   until TableroCompleto(Sudoku);
-  MostrarTablero(Sudoku, PistasSudoku);
+  MostrarTablero(Sudoku, PistasSudoku, NickName);
   if ResolverSudoku(Sudoku) then
     begin
-      writeln('¡Felicidades! Has resuelto el Sudoku.')
+      writeln('¡Felicidades, ', NickName, '! Has resuelto el Sudoku.')
     end;
     
     
@@ -489,6 +499,7 @@ begin
   ReadKey;
 end;
 BEGIN
+  NickName:=' ';
   JugarSudoku;
 END.
 //Made by: GG & MC//
