@@ -63,7 +63,9 @@ var
   i, j: Integer;
 begin
   ClrScr;
-  writeln('Hola, ', NickName, '. Este es tu sudoku asignado:');
+  writeln('|=================================================|');
+  writeln('|Hola, ', NickName, '. Este es tu sudoku asignado:|');
+  writeln('|=================================================|');
   writeln;
   for i := 1 to Filas do
   begin
@@ -432,6 +434,7 @@ begin
       writeln('================================================================');
       writeln('|1-Ingresar un dato   2-Eliminar un dato   3-Rendirse   4-Salir|');
       writeln('================================================================');
+      write('Opcion: ');
       readln(Opcion2);
       case Opcion2 of
         1:begin
@@ -451,7 +454,9 @@ begin
           exit;
         end;
       else
-        begin
+      begin
+		writeln('Accion ingresada invalida, selecciona una de las opciones correspondientes');
+		readln;
           goto EtiquetaAccion;
         end;
       end;
@@ -473,7 +478,9 @@ begin
         begin
           MostrarTablero(Sudoku, PistasSudoku, NickName);
           textcolor(LightRed);
-          writeln('Movimiento invalido. Intente nuevamente.');
+          writeln('|==============================================|');
+          writeln('|    Movimiento invalido. Intente nuevamente   |');
+          writeln('|==============================================|');
           textcolor(lightcyan);
           goto EtiquetaAccion;
         end;
@@ -486,16 +493,29 @@ begin
   MostrarTablero(Sudoku, PistasSudoku, NickName);
   if ResolverSudoku(Sudoku) then
     begin
-      writeln('¡Felicidades, ', NickName, '! Has resuelto el Sudoku.')
+		textcolor(lightgreen);
+	  writeln('|==============================================|');
+      writeln('|Felicidades, ', NickName, '! Has resuelto el Sudoku.');
+      writeln('|==============================================|');
     end;
     
     
   EtiquetaRendirse:
-  writeln('No se pudo resolver el Sudoku. La solución es:');
+  textcolor(lightred);
+   writeln('|==============================================|');
+   writeln('|No se pudo resolver el Sudoku. La solucion es:|');
+   writeln('|       Presione cualquier tecla para ver      |');
+   writeln('|==============================================|');
+  readln;
   BorrarValoresIngresados(Sudoku, PistasSudoku);
   ResolverSudoku(Sudoku);
   MostrarTableroFinal(Sudoku, PistasSudoku);
-  writeln('Presione cualquier tecla para salir.');
+  textcolor(lightcyan);
+  writeln('|====================================|');
+  writeln('|Presione cualquier tecla para salir.|');
+  writeln('|                                    |');
+  writeln('|  No te rindas, tu puedes hacerlo!  |');
+  writeln('|====================================|');
   ReadKey;
 end;
 BEGIN
