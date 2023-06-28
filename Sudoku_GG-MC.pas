@@ -279,9 +279,9 @@ end;
 procedure JugarSudoku;
 var
   fila, columna, numero: Integer;
-  Opcion1, Opcion2: shortint;
+  Opcion1, Opcion2, Opcion3: shortint;
 label
-  EtiquetaInicio, EtiquetaSudoku, EtiquetaIngresar, EtiquetaRendirse, EtiquetaAccion;
+  EtiquetaInicio, EtiquetaSudoku, EtiquetaIngresar, EtiquetaRendirse, EtiquetaAccion, EtiquetaEE;
 begin
   Randomize;
   EtiquetaInicio:
@@ -293,6 +293,44 @@ begin
   writeln('=====================================');
   write('NickName:');
   readln(NickName);
+    //--------------------------//
+  if NickName='GG-MC' then
+    begin
+      EtiquetaEE:
+      ClrScr;
+      TextColor(LightGreen);
+      writeln('EasterEgg Activado...');
+      writeln;
+      Writeln('        .,ldxdddoc^^dd.           cdxddddl^^.lk,                       odddddd;           ;ddddddd;       .;oxxdddoc^^dc    ');
+      Writeln('       .l0Xk:^^...;dOXWK,       .:OXOc,...,lkKWNc                     .,,cKXXWX:         ,OXWMNd,,.     .oKXx:^^^^:kKXWk.    ');
+      Writeln('      :KWK:       ^^kWX;      ,OWNo.       .dNWl                          .kkl0M0^^      .xdxWMK;       ;KWXc        :KMk.    ');
+      Writeln('     cXMWl          .kNc     ,KMWx.         .dWd                          .kk.cNWx.      lk^^oMMX      ;XMWo          :XO.    ');
+      Writeln('   ^^0MMK,          ^^d;    .xMMNc           .oc                          .kO..xWNl     ;O: oMMX;     .OMMX;           cd.    ');
+      Writeln('   :NMMO                    0MMX;                                         .kO. ^^0MX;  .kd. oMMK,    ;XMM0'                  );
+      Writeln('   :NMMO.      .lddxxxxdo, ,KMMX;       .cddxxxxdd;                       .kO.  :XMO.  lO   oMMX;    :NMM0'                  );
+      Writeln('   ^^0MMK,       ^^0MMO;^^. .kMMNc       .^^,kMMKc^^                      .kO.  .dWWd.;0c   oMMK,     ,0MMK,           .:'    );
+      Writeln('   ^^cNMWl         .kMMx.    ,KMWx.         oMMO.                         .kO.   .OMXdOd.   oMMK;      lNMNc           lK:    ');
+      Writeln('      :KMK:        :KWMx.     ,OWNo.      ^^OWWO^^                        .O0^   ^;XMM0^^   oMMK,      .lXM0,         c0o.    ');
+      Writeln('       .o0Xx:^^^^;dOdxNd.      .cOXOc,..^^;lOxoKO.                      .;ckNWOc;. lNNc^^;:OMMNd;;.     ^^xXKx:,...,cxk:      ');
+      Writeln('         .,cdddddoc. .dc          ^^codddddl^^lo.                       .oooooooo^^.c:. .cooooooood,       .;oxxxdddl;.^^');
+      writeln;
+      writeln('1-Volver a la pantalla de inicio     2-Salir');
+      readln(Opcion3);
+      clrscr;
+      case Opcion3 of
+        1:begin
+            goto EtiquetaInicio;
+          end;
+        2:begin
+            exit;
+          end
+      else
+        begin
+          goto EtiquetaEE;
+        end;
+      end;
+    end;
+ //--------------------------//
   repeat
   clrscr;
   writeln('===============================================================================');
