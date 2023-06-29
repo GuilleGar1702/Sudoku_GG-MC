@@ -1,0 +1,351 @@
+Inicio
+// Declaración de constantes
+const
+  Filas = 9;
+  Columnas = 9;
+  CuadranteTamano = 3;
+  PistasDificil = 17;
+  PistasNormal = 22;
+  PistasFacil = 32;
+
+// Declaración de tipos
+Tipo Tablero es una matriz de enteros de tamaño [Filas, Columnas]
+Tipo Pistas es una matriz de booleanos de tamaño [Filas, Columnas]
+Tipo de TableroR es una matriz de enteros de tamaño [Filas, Columnas]
+Tipo PistasR es una matriz de booleanos de tamaño [Filas, Columnas]
+Tipo de TableroFinal es una matriz de enteros de tamaño [Filas, Columnas]
+Tipo PistasFinal es una matriz de booleanos de tamaño [Filas, Columnas]
+
+// Variables globales
+
+Variable Sudoku: Tablero
+Variable PistasSudoku: Pistas
+variable SudokuR : TableroR
+variable PistasSudokuR : PistasR
+SudokuFinal : TableroFinal
+PistasSudokuFinal : PistasFinal
+Variable NickName: cadena
+
+Procedimiento InicializarTablero(variable Sudoku: Tablero)
+//variables locales
+variable i, variable j: Entero
+
+  Para cada fila de 1 a Filas
+
+    Para cada columna de 1 a Columnas
+
+      Hacer 
+        Sudoku[fila, columna] = 0
+
+  Fin Para
+Fin Procedimiento
+
+Función EsMovimientoValido (Sudoku: Tablero, fila, columna, numero: Entero): Booleano
+
+//Variables locales
+    variable i : integer
+    variable j : integer
+    variable inicioFila : integer
+    variable inicioColumna : integer
+
+  Para cada i de 1 a Columnas 
+
+
+    Si (Sudoku[fila, i] = numero) o (Sudoku[i, columna] = numero) entonces
+
+      Retornar Falso
+
+    Fin Si
+
+  Fin Para
+
+  inicioFila = CuadranteTamano * ((fila - 1) div CuadranteTamano) + 1
+
+  inicioColumna = CuadranteTamano * ((columna - 1) div CuadranteTamano) + 1
+
+  Para cada i de inicioFila a inicioFila + CuadranteTamano - 1
+
+    Para cada j de inicioColumna a inicioColumna + CuadranteTamano - 1
+
+      Si Sudoku[i, j] = numero entonces
+
+        Retornar Falso
+
+      Fin Si
+
+    Fin Para
+
+  Fin Para
+
+  Retornar Verdadero
+
+Fin Función
+
+Procedimiento MostrarTablero(Sudoku: Tablero, PistasSudoku: Pistas, NickName: cadena)
+    Limpiar Pantalla
+        Escribir "Hola, ", NickName, ". Este es tu sudoku asignado:"
+            Para cada fila de 1 a Filas
+                Para cada columna de 1 a Columnas
+                    Si PistasSudoku[fila, columna] entonces
+                        Escribir en color azul claro Sudoku[fila, columna]
+                            Sino si Sudoku[fila, columna] = 0 entonces
+                                Escribir en color blanco Sudoku[fila, columna]
+                                    Sino
+                                        Escribir en color amarillo Sudoku[fila, columna]
+                                    Fin Si
+                                        Si columna mod CuadranteTamano = 0 entonces
+                                            Escribir " "
+                                        Fin Si
+                    Fin Para
+                        Escribir una nueva línea
+                            Si fila mod CuadranteTamano = 0 entonces
+                                Escribir una nueva línea
+                            Fin Si
+                    Fin Para
+                        Restaurar color de texto a blanco
+Fin Procedimiento
+
+Procedimiento BorrarValoresIngresados(var Sudoku: Tablero; PistasSudoku: Pistas)
+variables
+i, j: Integer;
+    Principio
+        para i := 1 hasta Filas hacer
+            para j := 1 hasta Columnas hacer
+                si no PistasSudoku[i, j] entonces
+                    Sudoku[i, j] := 0;
+                Fin Si
+            Fin Para
+        Fin Para
+Fin Procedimiento
+
+Procedimiento RealizarMovimiento(var Sudoku: Tablero, fila, columna, numero: Entero)
+  Sudoku[fila, columna] = numero
+Fin Procedimiento
+
+Procedimiento EliminarMovimiento(var Sudoku: Tablero, fila, columna: Entero, NickName: cadena)
+  RealizarMovimiento(Sudoku, fila, columna, 0)
+  MostrarTablero(Sudoku, PistasSudoku, NickName)
+Fin Procedimiento
+
+Función TableroCompleto(Sudoku: Tablero): Booleano
+  Para cada fila de 1 a Filas
+    Para cada columna de 1 a Columnas
+      Si Sudoku[fila, columna] = 0 entonces
+        Retornar Falso
+      Fin Si
+    Fin Para
+  Fin Para
+  Retornar Verdadero
+Fin Función
+
+Función ResolverSudoku(var SudokuR: TableroR): Boolean;
+variables
+    fila, columna, numero: Integer;
+Principio
+    si TableroCompleto(Sudoku) entonces
+        devolver verdadero;
+            salir;
+    Fin Si
+
+    para fila := 1 hasta Filas hacer
+        para columna := 1 hasta Columnas hacer
+            si Sudoku[fila, columna] = 0 entonces
+                para numero := 1 hasta Columnas hacer
+                    si EsMovimientoValido(Sudoku, fila, columna, numero) entonces
+                        Sudoku[fila, columna] := numero;
+                            si ResolverSudoku(Sudoku) entonces
+                                devolver verdadero;
+                                    salir;
+                            Fin Si
+                                Sudoku[fila, columna] := 0;
+                    Fin Si
+                Fin Para
+                    devolver falso;
+                        salir;
+            Fin Si
+        Fin Para
+    Fin Para
+        devolver falso;
+Fin Función
+
+Función ResolverSudokuGenerado (var SudokuR: TableroR): Boolean;
+variables
+    fila, columna, numero: Integer;
+Principio
+    si TableroCompleto(SudokuR) entonces
+        devolver verdadero;
+            salir;
+    Fin Si
+
+        para fila := 1 hasta Filas hacer
+            para columna := 1 hasta Columnas hacer
+                si SudokuR[fila, columna] = 0 entonces
+                    para numero := 1 hasta Columnas hacer
+                        si EsMovimientoValido(SudokuR, fila, columna, numero) entonces
+                            SudokuR[fila, columna] := numero;
+                                si ResolverSudokuGenerado(SudokuR) entonces
+                                    devolver verdadero;
+                                        salir;
+                                Fin Si
+                                    SudokuR[fila, columna] := 0;
+                        Fin Si
+                    Fin Para
+                        devolver falso;
+                            salir;
+                Fin Si
+            Fin Para
+        Fin Para
+            devolver falso;
+Fin Función
+
+Función SudokuUnico(var Sudoku: Tablero): Boolean;
+variables 
+    CopiaSudoku: Tablero;
+Principio
+    CopiaSudoku := Sudoku;
+    SudokuUnico := ResolverSudokuGenerado(Sudoku);
+Fin Función
+
+Procedimiento MostrarTableroFinal(SudokuFinal: TableroFinal; PistasSudokuFinal: PistasFinal)
+variables 
+    i, j: Integer;
+Principio
+LimpiarPantalla();
+    para i := 1 hasta Filas hacer
+        para j := 1 hasta Columnas hacer
+            si PistasSudokuFinal[i, j] entonces
+                EstablecerColorTexto(LightBlue); // Si la celda es una pista, se establece el color de texto como azul claro
+                    sino si SudokuFinal[i, j] = 0 entonces
+                        EstablecerColorTexto(White); // Si la celda está vacía, se establece el color de texto como blanco
+                            sino
+                                EstablecerColorTexto(Yellow); // Si la celda tiene un valor, se establece el color de texto como amarillo
+                                    escribir(SudokuFinal[i, j], ' '); // Se muestra el valor de la celda seguido de un espacio en blanco
+                                        si j mod CuadranteTamano = 0 entonces
+                                            escribir(' '); // Se agrega un espacio adicional después de cada cuadrante
+                                        Fin Si
+        Fin Para
+            escribirNuevaLinea(); // Se hace un salto de línea después de mostrar cada fila
+                si i mod CuadranteTamano = 0 entonces
+                    escribirNuevaLinea(); // Se hace un salto de línea adicional después de mostrar cada cuadrante
+    Fin Para
+        EstablecerColorTexto(White); // Se restaura el color de texto a blanco al finalizar
+Fin Procedimiento
+
+Procedimiento InicializarPistas(var PistasSudoku: Pistas)
+variables
+    i, j, PistasGeneradas, fila, columna, numero: Integer;
+        Principio
+            PistasGeneradas := 0;
+                para i := 1 hasta Filas hacer
+                    para j := 1 hasta Columnas hacer
+                        PistasSudoku[i, j] := Falso;
+                        PistasSudokuR[i, j] := Falso;
+                    Fin Para
+                        Repetir
+                            i := Aleatorio(Filas) + 1;
+                            j := Aleatorio(Columnas) + 1;
+                            fila := i;
+                            columna := j;
+                            NumeroRandom:
+                            numero := Aleatorio(9) + 1;
+                                si no EsMovimientoValido(Sudoku, fila, columna, numero) entonces
+                                    ir a NumeroRandom;
+                                Fin Si
+                            Sudoku[i, j] := numero;
+                                si no PistasSudoku[i, j] entonces
+                                    PistasSudoku[i, j] := Verdadero;
+                                    PistasSudokuR[i, j] := Verdadero;
+                                    Incrementar(PistasGeneradas);
+                                Fin del si
+                                    si no ResolverSudokuGenerado(SudokuR) entonces
+                                        ir a NumeroRandom;
+                                    Fin Si
+                        hasta (PistasGeneradas >= PistasDificil) y SudokuUnico(SudokuR);
+                            si no ResolverSudokuGenerado(SudokuR) entonces
+                                ir a NumeroRandom;
+                            Fin Si
+Fin Procedimiento
+
+procedimiento JugarSudoku;
+variable
+  fila, columna, numero: Entero;
+  Opcion1, Opcion2, Opcion3: Entero;
+
+Inicio:
+  Randomize;
+  MostrarMensajeDeBienvenida();
+
+  leer(NickName);
+
+  si NickName = "GG-MC" entonces
+    EasterEgg();
+
+  repetir
+    MostrarMenuPrincipal();
+    leer(Opcion1);
+
+    caso Opcion1 de
+      1:
+        GenerarSudoku();
+        repetir
+          MostrarTablero();
+          MostrarMenuAcciones();
+          leer(Opcion2);
+
+          caso Opcion2 de
+            1:
+              leerPosicion(fila, columna);
+              si esPista(fila, columna) entonces
+                mostrarMensajeError("No puedes modificar una pista")
+              sino
+                leerNumero(numero);
+                si esMovimientoValido(fila, columna, numero) entonces
+                  realizarMovimiento(fila, columna, numero)
+                sino
+                  mostrarMensajeError("Movimiento inválido. Intente nuevamente")
+              fin si
+
+            2:
+              leerPosicion(fila, columna);
+              eliminarDato(fila, columna)
+
+            3:
+              rendirse();
+
+            4:
+              salir();
+
+            otro:
+              mostrarMensajeError("Opción inválida")
+          fin caso
+
+        mientras no seCompleteElTablero()
+
+        si resolverSudoku() entonces
+          mostrarMensajeDeFelicitaciones()
+        sino
+          mostrarSolucion()
+
+        esperarTecla()
+
+      2:
+        mostrarManualDeUsuario()
+        esperarTecla()
+
+      3:
+        salir()
+
+      otro:
+        mostrarMensajeError("Opción inválida")
+    fin caso
+
+  mientras Opcion1 != 3
+
+fin procedimiento
+
+
+// Programa principal
+  InicializarTablero(Sudoku)
+  Leer NickName
+    JugarSudoku
+Fin
