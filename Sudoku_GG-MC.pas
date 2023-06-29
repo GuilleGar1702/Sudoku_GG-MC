@@ -23,6 +23,7 @@ var
   SudokuFinal: TableroFinal;
   PistasSudokuFinal: PistasFinal;
   NickName: string;
+  
 procedure InicializarTablero(var Sudoku: Tablero);
 var
   i, j: Integer;
@@ -536,7 +537,13 @@ begin
 		textcolor(lightgreen);
 	  writeln('|==============================================|');
       writeln('|Felicidades, ', NickName, '! Has resuelto el Sudoku.');
-      writeln('|==============================================|');
+      writeln('|==============================================|'); 
+      writeln;
+      writeln('|====================================|');
+      writeln('|Presione cualquier tecla para salir.|');
+      writeln('|====================================|'); 
+      readln;
+      exit;
     end;
     
     
